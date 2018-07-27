@@ -29,7 +29,7 @@ var con = new pg.Pool({
     idleTimeoutMillis:30000, // 最大閒置時間 3s
 });
 
-dbCon.connect(function(err, client, done) {
+con.connect(function(err, client, done) {
     if(err) {
         throw err;
     }else{
