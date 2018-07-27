@@ -26,7 +26,7 @@ var con = new pg.Pool({
 
     // 擴展屬性
     max:20, // 最大連線數
-    idleTimeoutMillis:3000, // 最大閒置時間 3s
+    idleTimeoutMillis:30000, // 最大閒置時間 3s
 });
 
 module.exports = con;
