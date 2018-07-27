@@ -1,0 +1,21 @@
+.col-md-3.left_col
+    .left_col.scroll-view
+        .navbar.nav_title(style='border: 0')
+            a.site_title(href='/')
+                i.fa.fa-paw
+                span  Demo Admin
+        .clearfix
+        // /menu profile quick info
+        br
+        // sidebar menu
+        #sidebar-menu.main_menu_side.hidden-print.main_menu
+            .menu_section
+                ul.nav.side-menu
+                    li
+                        a
+                            i.fa.fa-edit
+                            | 用戶資料
+                            span.fa.fa-chevron-down
+                        ul.nav.child_menu
+                            li
+                                a(href='/users') 用戶列表

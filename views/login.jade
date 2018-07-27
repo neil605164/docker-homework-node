@@ -1,0 +1,40 @@
+doctype html
+html(lang="en")
+	head
+		meta(http-equiv="Content-Type", content="text/html; charset=UTF-8")
+		// Meta, title, CSS, favicons, etc.
+		meta(charset="utf-8")
+		meta(http-equiv="X-UA-Compatible", content="IE=edge")
+		meta(name="viewport", content="width=device-width, initial-scale=1")
+		title IM Admin |
+		// Bootstrap
+		link(href="../vendors/bootstrap/dist/css/bootstrap.min.css", rel="stylesheet")
+		// Font Awesome
+		link(href="../vendors/font-awesome/css/font-awesome.min.css", rel="stylesheet")
+		// NProgress
+		link(href="../vendors/nprogress/nprogress.css", rel="stylesheet")
+		// Animate.css
+		link(href="../vendors/animate.css/animate.min.css", rel="stylesheet")
+		// Custom Theme Style
+		link(href="../build/css/custom.min.css", rel="stylesheet")
+	body.login
+		div
+			a#signup.hiddenanchor
+			a#signin.hiddenanchor
+			.login_wrapper
+				.animate.form.login_form
+					section.login_content
+						form(action="/login" method="post" enctype="application/x-www-form-urlencoded")
+							h1 IM 後臺系統
+							div
+								input.form-control(type="text", placeholder="Username", required="" name="username")
+							div
+								input.form-control(type="password", placeholder="Password", required="" name="password")
+							div
+								input.btn.btn-default.submit(type="submit" value="Log in")
+							.clearfix
+							.separator
+								div
+									h1
+										i.fa.fa-paw
+										|  IM Admin

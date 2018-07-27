@@ -1,0 +1,162 @@
+extends layout
+block content
+    // Datatables
+    link(href='../vendors/datatables.net-bs/css/dataTables.bootstrap.min.css', rel='stylesheet')
+    link(href='../vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css', rel='stylesheet')
+    link(href='../vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css', rel='stylesheet')
+    link(href='../vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css', rel='stylesheet')
+    link(href='../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css', rel='stylesheet')
+    // PNotify
+    link(href='../vendors/pnotify/dist/pnotify.css', rel='stylesheet')
+    link(href='../vendors/pnotify/dist/pnotify.buttons.css', rel='stylesheet')
+    link(href='../vendors/pnotify/dist/pnotify.nonblock.css', rel='stylesheet')
+    // 載入chosen CSS
+    link(href='../vendors/jquery-chosen/prism.css', rel='stylesheet')
+    link(href='../vendors/jquery-chosen/chosen.css', rel='stylesheet')
+    // page content
+    .right_col(role='main')
+        div
+            .page-title
+                .title_left
+                    h3
+                        | 用戶列表
+                .title_right
+            .clearfix
+            
+            .row
+                .col-md-12.col-sm-12.col-xs-12
+                    .x_panel
+                        .x_title
+                            // Small modal
+                            button#btn-add-user.btn.btn-primary(type='button', data-toggle='modal', data-target='.add-user-modal-sm') 新增用戶
+                            .modal.fade.add-user-modal-sm(tabindex='-1', role='dialog', aria-hidden='true')
+                                .modal-dialog
+                                    .modal-content
+                                        .modal-header
+                                            button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                                span(aria-hidden='true') ×
+                                            h4.modal-title#myModalLabel2 新增用戶
+                                        .modal-body
+                                            form#add_user_form.form-horizontal.form-label-left(novalidate='')
+                                                .item.form-group
+                                                    label.control-label.col-md-3.col-sm-3.col-xs-12(for='username')
+                                                        | 帳號
+                                                    .col-md-6.col-sm-6.col-xs-12
+                                                        input#new_username.form-control.col-md-7.col-xs-12(data-validate-length-range='6', data-validate-words='2', name='username', placeholder='', required='', type='text')
+                                                .item.form-group
+                                                    label.control-label.col-md-3(for='password') 密碼
+                                                    .col-md-6.col-sm-6.col-xs-12
+                                                        input#new_password.form-control.col-md-7.col-xs-12(type='password', name='password', data-validate-length='6,8', required='')
+                                                .item.form-group
+                                                    label.control-label.col-md-3.col-sm-3.col-xs-12(for='nickname')
+                                                        | 暱稱
+                                                    .col-md-6.col-sm-6.col-xs-12
+                                                        input#new_nickname.form-control.col-md-7.col-xs-12(data-validate-length-range='6', data-validate-words='2', name='nickname', placeholder='', type='text')
+                                        .modal-footer
+                                            button.btn.btn-default(type='button', data-dismiss='modal') 關閉
+                                            button#add_user_submit.btn.btn-primary(type='button') 送出
+                            .clearfix
+                        .x_content
+                            table#datatable-fixed-header.table.table-striped.table-bordered
+                                thead
+                                    tr
+                                        th 帳號
+                                        th 暱稱
+                                        th 創建日期
+                                        //- th
+                // Small modal
+                .modal.fade.edit-pass-modal-sm(tabindex='-1', role='dialog', aria-hidden='true')
+                    .modal-dialog.modal-sm
+                        .modal-content
+                            .modal-header
+                                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                    span(aria-hidden='true') ×
+                                h4.modal-title#myModalLabel2 修改密碼
+                            .modal-body
+                                form#edit_pass_form.form-horizontal.form-label-left(novalidate='')
+                                    .item.form-group
+                                        label.control-label.col-md-3(for='edit_pass_input') 帳號
+                                        .col-md-9.col-sm-9.col-xs-9
+                                            input#edit_user_account.form-control.col-md-7.col-xs-12(type='text', name='edit_user_account', data-validate-length='6,８', disabled='')
+                                    .item.form-group
+                                        label.control-label.col-md-3(for='edit_pass_input') 密碼
+                                        .col-md-9.col-sm-9.col-xs-9
+                                            input#edit_pass_input.form-control.col-md-7.col-xs-12(type='password', name='edit_pass', data-validate-length='6,8', required='')
+                            .modal-footer
+                                button.btn.btn-default(type='button', data-dismiss='modal') 關閉
+                                button#edit_pass_submit.btn.btn-primary(type='button') 送出
+                // 會員詳細資料
+                .modal.fade.user-info-modal-sm(tabindex='-1', role='dialog', aria-hidden='true')
+                    .modal-dialog
+                        .modal-content
+                            .modal-header
+                                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                    span(aria-hidden='true') ×
+                                h4.modal-title#myModalLabel2 詳細資料
+                            .modal-body
+                                form#edit_userInfo_form.form-horizontal.form-label-left(novalidate='')
+                                    .item.form-group
+                                        label.control-label.col-md-3(for='username') 帳號
+                                        .col-md-6.col-sm-6.col-xs-12
+                                            input#username.form-control.col-md-7.col-xs-12(type='text', name='username', data-validate-length='6,8' disabled)
+                                    .item.form-group
+                                        label.control-label.col-md-3(for='edit_user_nickname') 暱稱
+                                        .col-md-6.col-sm-6.col-xs-12
+                                            input#edit_user_nickname.form-control.col-md-7.col-xs-12(type='text', name='edit_nickname', data-validate-length='6,8')
+                                    .item.form-group
+                                        label.control-label.col-md-3(for='edit_user_org_unit') 單位
+                                        .col-md-6.col-sm-6.col-xs-12
+                                            select#edit_user_org_unit(class='select2_single form-control' name='edit_orgUnit')
+                                    .item.form-group
+                                        label.control-label.col-md-3(for='create_Time') 註冊時間
+                                        .col-md-6.col-sm-6.col-xs-12
+                                            input#create_Time.form-control.col-md-7.col-xs-12(type='text', name='create_Time', data-validate-length='6,8' disabled)
+                                    .item.form-group
+                                        label.control-label.col-md-3(for='last_Login_Time') 最後登入時間
+                                        .col-md-6.col-sm-6.col-xs-12
+                                            input#last_Login_Time.form-control.col-md-7.col-xs-12(type='text', name='last_Login_Time', data-validate-length='6,8' disabled)
+                            .modal-footer
+                                button.btn.btn-default(type='button', data-dismiss='modal') 關閉
+                                button#edit_userInfo_submit.btn.btn-primary(type='button') 修改
+                // 刪除帳號
+                .modal.fade.del-token-modal-sm(tabindex='-1', role='dialog', aria-hidden='true')
+                    .modal-dialog.modal-sm
+                        .modal-content
+                            .modal-header
+                                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                    span(aria-hidden='true') ×
+                                h4.modal-title#myModalLabel2 停用會員帳號
+                            .modal-body
+                                form#del_token_form.form-horizontal.form-label-left(novalidate='')
+                                    .item.form-group
+                                        #del_user_account
+                                        #del_user_nickname
+                                        h5 停用後無法復原，是否確認停用帳號
+                            .modal-footer
+                                button.btn.btn-default(type='button', data-dismiss='modal') 關閉
+                                button#del_userToken_submit.btn.btn-primary(type='button') 確認
+    // page content
+    // Datatables
+    script(src='../vendors/datatables.net/js/jquery.dataTables.min.js')
+    script(src='../vendors/datatables.net-bs/js/dataTables.bootstrap.min.js')
+    script(src='../vendors/datatables.net-buttons/js/dataTables.buttons.min.js')
+    script(src='../vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js')
+    script(src='../vendors/datatables.net-buttons/js/buttons.flash.min.js')
+    script(src='../vendors/datatables.net-buttons/js/buttons.html5.min.js')
+    script(src='../vendors/datatables.net-buttons/js/buttons.print.min.js')
+    script(src='../vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js')
+    script(src='../vendors/datatables.net-keytable/js/dataTables.keyTable.min.js')
+    script(src='../vendors/datatables.net-responsive/js/dataTables.responsive.min.js')
+    script(src='../vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js')
+    script(src='../vendors/datatables.net-scroller/js/dataTables.scroller.min.js')
+    script(src='../vendors/jszip/dist/jszip.min.js')
+    script(src='../vendors/pdfmake/build/pdfmake.min.js')
+    script(src='../vendors/pdfmake/build/vfs_fonts.js')
+    script(src='/javascripts/users_list.js')
+    // PNotify
+    script(src='../vendors/pnotify/dist/pnotify.js')
+    script(src='../vendors/pnotify/dist/pnotify.buttons.js')
+    script(src='../vendors/pnotify/dist/pnotify.nonblock.js')
+    //	載入chosen JS
+    script(src='../vendors/jquery-chosen/chosen.jquery.js')
+    script(src='../vendors/jquery-chosen/prism.js')
