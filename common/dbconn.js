@@ -19,6 +19,7 @@ var env = require('./env');
 
 
 var con = new pg.Pool({
+    host: env.DB_host,
     user: env.user,
     database: env.database,
     password: env.password,
