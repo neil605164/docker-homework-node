@@ -29,4 +29,6 @@ var con = new pg.Pool({
     idleTimeoutMillis:30000, // 最大閒置時間 3s
 });
 
+console.log(env)
+console.log(con)
 module.exports = con;
