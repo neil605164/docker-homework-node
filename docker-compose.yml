@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  # pgsql:
+  #   image: postgres:alpine
+  #   ports:
+  #     - "5432:5432"
+  #   environment:
+  #     - POSTGRES_USER=root
+  #     - POSTGRES_PASSWORD=qwe123
+  #     - POSTGRES_DB=gitea
+
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
