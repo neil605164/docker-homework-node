@@ -29,6 +29,14 @@ var con = new pg.Pool({
     idleTimeoutMillis:30000, // 最大閒置時間 3s
 });
 
+dbCon.connect(function(err, client, done) {
+    if(err) {
+        throw err;
+    }else{
+        console.log("連線成功")
+    }
+})
+
 console.log(env)
 console.log(con)
 module.exports = con;
