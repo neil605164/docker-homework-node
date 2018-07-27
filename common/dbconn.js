@@ -23,7 +23,7 @@ var con = new pg.Pool({
     user: env.user,
     database: env.database,
     password: env.password,
-    port:5432,
+    port: env.port,
 
     // 擴展屬性
     max:20, // 最大連線數

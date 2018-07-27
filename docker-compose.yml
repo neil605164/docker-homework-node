@@ -1,14 +1,14 @@
 version: '2'
 
 services:
-  # pgsql:
-  #   image: postgres:alpine
-  #   ports:
-  #     - "5432:5432"
-  #   environment:
-  #     - POSTGRES_USER=root
-  #     - POSTGRES_PASSWORD=qwe123
-  #     - POSTGRES_DB=gitea
+  pgsql:
+    image: postgres:alpine
+    ports:
+      - "54321:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=neil820724
+      - POSTGRES_DB=homeworknode
 
   adminer:
     image: adminer
