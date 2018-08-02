@@ -63,7 +63,7 @@ block content
                                         th 帳號
                                         th 暱稱
                                         th 創建日期
-                                        //- th
+                                        th
                 // Small modal
                 .modal.fade.edit-pass-modal-sm(tabindex='-1', role='dialog', aria-hidden='true')
                     .modal-dialog.modal-sm
@@ -103,18 +103,6 @@ block content
                                         label.control-label.col-md-3(for='edit_user_nickname') 暱稱
                                         .col-md-6.col-sm-6.col-xs-12
                                             input#edit_user_nickname.form-control.col-md-7.col-xs-12(type='text', name='edit_nickname', data-validate-length='6,8')
-                                    .item.form-group
-                                        label.control-label.col-md-3(for='edit_user_org_unit') 單位
-                                        .col-md-6.col-sm-6.col-xs-12
-                                            select#edit_user_org_unit(class='select2_single form-control' name='edit_orgUnit')
-                                    .item.form-group
-                                        label.control-label.col-md-3(for='create_Time') 註冊時間
-                                        .col-md-6.col-sm-6.col-xs-12
-                                            input#create_Time.form-control.col-md-7.col-xs-12(type='text', name='create_Time', data-validate-length='6,8' disabled)
-                                    .item.form-group
-                                        label.control-label.col-md-3(for='last_Login_Time') 最後登入時間
-                                        .col-md-6.col-sm-6.col-xs-12
-                                            input#last_Login_Time.form-control.col-md-7.col-xs-12(type='text', name='last_Login_Time', data-validate-length='6,8' disabled)
                             .modal-footer
                                 button.btn.btn-default(type='button', data-dismiss='modal') 關閉
                                 button#edit_userInfo_submit.btn.btn-primary(type='button') 修改

@@ -45,6 +45,10 @@ router.get('/check_New_Member', include.check_New_Member);
 router.post('/register_member', include.register_member);
 // 顯示「會員清單」+ 「模糊搜尋」功能
 router.get('/user_list', include.user_list);
+// 取得用戶資料
+router. get('/get_user_info', include.get_user_info);
+// 編輯用戶資料
+router. post('/edit_user_info', include.edit_user_info);
 // 顯示「會員首頁」
 router.get('/users', function(req, res) {res.render('user_list');});
 

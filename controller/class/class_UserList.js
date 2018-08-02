@@ -7,7 +7,9 @@ const mysql = require('mysql');
 
 
 module.exports = {
+    getUserInfo: getUserInfo,
     registerMember: registerMember,
+    editUserNickname: editUserNickname,
     checkAccountExists: checkAccountExists,
     getUserAccountAndInfo: getUserAccountAndInfo,
 };
@@ -23,11 +25,11 @@ function registerMember(data, callback) {
     async.waterfall([
         // 檢查帳號是否已存在
         function(next) {
-            checkAccountExists(data.username, function(err) {
+            checkAccountExists(data.username, function(err, result) {
                 if(err){
                     return next(err);
                 }
-
+                
                 next();
             });
         },
@@ -67,14 +69,16 @@ function checkAccountExists(account, callback) {
     classIMAdmin.QueryData(query, parameter, function(result) {
         if (result.status === 'error' ) {
             response.errCode = '10005';
-            response.query = mysql.format(query);
+            response.query = mysql.format(query, parameter);
             return callback(response);
         }
+
         if (result.status !== 'empty' ) {
             response.errCode = '10006';
             return callback(response);
         }
-        callback()
+
+        callback(null, result)
     })
 }
 
@@ -98,6 +102,75 @@ function getUserAccountAndInfo(callback) {
             response.errCode = '10008';
             response.query = mysql.format(query);
             return callback(response);
+        }
+
+        let dbData = result.result.rows
+        for(let i = 0; i < dbData.length; i++) {
+            dbData[i].nickname = urlencode.decode(dbData[i].nickname);
+        }
+
+        callback(null, result.result.rows);
+    })
+}
+
+/**
+ * 更改帳號暱稱
+ * @param {*} data 使用者名稱 + 暱稱
+ * @param {*} callback 回傳更改後結果
+ */
+function editUserNickname(data, callback) {
+    let response = {};
+
+    async.waterfall([
+        // 檢查帳號是否已存在
+        // function(next) {
+        //     checkAccountExists(data.username, function(err) {
+        //         if(err){
+        //             return next(err);
+        //         }
+
+        //         next();
+        //     });
+        // },
+        // 修改暱稱
+        function(next) {
+            let query = "UPDATE users SET nickname = $1 WHERE username = $2";
+            let parameter = [data.nickname, data.username];
+
+            classIMAdmin.QueryData(query, parameter, function(result) {
+                if (result.status === 'error' ) {
+                    response.errCode = '10010';
+                    response.query = mysql.format(query, parameter);
+                    return callback(response);
+                }
+
+                callback()
+            })
+        }
+    ], function (err) {
+        if(err) {
+            return callback(err);
+        }
+        callback();
+    });
+}
+
+/**
+ * 取用戶詳細資料
+ * @param {*} data 用戶帳號 
+ * @param {*} callback 回傳錯誤代碼，或DB資料
+ */
+function getUserInfo(data, callback) {
+    let response = {};
+
+    let query = "SELECT username, nickname, create_at FROM users WHERE username = $1";
+    let parameter = [data.username];
+
+    classIMAdmin.QueryData(query, parameter, function(result) {
+        if (result.status === 'error' ) {
+            response.errCode = '10012';
+            response.query = mysql.format(query);
+            return callback(response, parameter);
         }
 
         let dbData = result.result.rows

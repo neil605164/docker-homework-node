@@ -29,7 +29,7 @@ function QueryData(sqlStatement, params, callback) {
         if(err) {
             throw err;
         }
-        
+        console.log(sqlStatement)
         if(params !== '') {
             client.query(sqlStatement, params, function(error, db_results) {
                 if (error) {

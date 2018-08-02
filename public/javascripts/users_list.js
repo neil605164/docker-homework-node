@@ -50,7 +50,7 @@ $(document).ready(function() {
             {data: 'username'},
             {data: 'nickname'},
             {data: 'create_at'},
-            // {data: ''}
+            {data: ''}
         ],
         columnDefs: [
             {
@@ -59,22 +59,23 @@ $(document).ready(function() {
                     return data
                 }
             },
-            // {
-            //     "targets": -1,
-            //     "data": null,
-            //     "render": function (data, type, row ) {
-            //         let html = "";
-            //         // 被刪除帳號不顯示功能項目
-            //         // if(row.user_status == 1) {
-            //         //     return html;
-            //         // }
-            //         html = "<button type='button' class='btn btn-info btn-edit-pass btn-get-username' data-toggle='modal' data-target='.edit-pass-modal-sm'>修改密碼</button>"
-            //         + "<button type='button' class='btn btn-info btn-edit-user-info btn-get-username' data-toggle='modal' data-target='.user-info-modal-sm'>詳細資料</button>"
-            //         + "<button type='button' class='btn btn-danger btn-del-user-token btn-get-username' data-toggle='modal' data-target='.del-token-modal-sm'>永久停用</button>";
-            //         return html;
+            {
+                "targets": -1,
+                "data": null,
+                "render": function (data, type, row ) {
+                    let html = "";
+                    // 被刪除帳號不顯示功能項目
+                    // if(row.user_status == 1) {
+                    //     return html;
+                    // }
+                    html = "<button type='button' class='btn btn-info btn-edit-user-info btn-get-username' data-toggle='modal' data-target='.user-info-modal-sm'>詳細資料</button>"
+                    // html = "<button type='button' class='btn btn-info btn-edit-pass btn-get-username' data-toggle='modal' data-target='.edit-pass-modal-sm'>修改密碼</button>"
+                    // + "<button type='button' class='btn btn-info btn-edit-user-info btn-get-username' data-toggle='modal' data-target='.user-info-modal-sm'>詳細資料</button>"
+                    // + "<button type='button' class='btn btn-danger btn-del-user-token btn-get-username' data-toggle='modal' data-target='.del-token-modal-sm'>永久停用</button>";
+                    return html;
                     
-            //     }
-            // }
+                }
+            }
         ]
     });
     // 取得用戶帳號 Modal
@@ -122,89 +123,41 @@ $(document).ready(function() {
     //     })
     // });
     // 顯示會員詳細資料 Modal
-    // $TBODY.on('click', 'button.btn-edit-user-info', function () {
-    //     $.ajax({
-    //         type: "GET",
-    //         url: '/user_info',
-    //         dataType: "json",
-    //         data: {
-    //             name: USER_NAME
-    //         },
-    //         error: function(err) {
-    //             show_pnotify("會員詳細資料", "建立連線失敗", "error");
-    //         },
-    //         success:function(data) {
-    //             if(data.status == 'Y'){
-    //                 $('#edit_user_org_unit').append("<option value='', disabled='', selected=''>-- 請選擇單位 --</option>");
-    //                 for (const [key, val] of Object.entries(GROUP_DATA)) {
-    //                     $('#edit_user_org_unit').append("<option value='" + key +"'>" + val + "</option>");
-    //                 }
-    //                 $('#edit_user_org_unit').chosen({width: "100%"});
-    //                 $('#username').val(USER_NAME);
-    //                 $('#edit_user_nickname').val(data.data.vcard.NICKNAME);
-    //                 $('#edit_user_org_unit').val(data.data.vcard.ORGUNIT);
-    //                 $('#edit_user_org_unit').trigger("chosen:updated");
-    //                 $('#create_Time').val(data.data.userCreatetime);
-    //                 $('#last_Login_Time').val(data.data.time);
-    //             }else {
-    //                 show_pnotify("編輯會員詳細資料", "修改資料失敗", "error");
-    //             }
-    //         }
-    //     });
-    // } );
-    // $('#edit_user_org_name').on('change', function() {
-    //     $('#edit_user_org_unit').empty();
-    //     var orgName = $('#edit_user_org_name').val();
-    //     var orgUnit =GROUP_DATA[orgName];
-    //     for (let i = 0; i < orgUnit.length; i++) {
-    //         $('#edit_user_org_unit').append("<option value='" + orgUnit[i] +"'>" + orgUnit[i] + "</option>");
-    //     }
-    //     $("#edit_user_org_unit").trigger("chosen:updated");
-    // });
+    $TBODY.on('click', 'button.btn-edit-user-info', function () {
+        $('#username').val(USER_NAME);
+        $('#edit_user_nickname').val(NICKNAME);
+    } );
+
     // 編輯會員詳細資料 Modal
-    // $($EDIT_USERINFO_SUBMIT).on('click', function() {
-    //     let $edit_user_nickname = $('#edit_user_nickname').val();
-    //     let $edit_user_org_name = $('#edit_user_org_unit option:selected').text();
-    //     let $edit_user_org_unit = $('#edit_user_org_unit').val();
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: "/edit_user_info",
-    //         dataType: "json",
-    //         data: {
-    //             name: USER_NAME,
-    //             nickname: $edit_user_nickname,
-    //             orgname: $edit_user_org_name,
-    //             orgunit: $edit_user_org_unit,
-    //         },
-    //         success: function (data){
-    //             // console.log(data);
-
-    //             if(data.status == 'N') {
-    //                 show_pnotify('編輯會員詳細資料', data.message, 'error');
-    //                 $Table.ajax.reload();
-    //             }
-
-    //             if(data.status == 'Y') {
-    //                 show_pnotify('編輯會員詳細資料', data.message, 'success');
-    //                 $Table.ajax.reload();
-    //                 $('.user-info-modal-sm').modal('hide');
-    //             }
-    //         },
-    //         error: function (err) {
-    //             show_pnotify("編輯會員詳細資料", "建立連線失敗", "error");
-    //         }
-    //     });
-    // });
+    $($EDIT_USERINFO_SUBMIT).on('click', function() {
+        let $edit_user_nickname = $('#edit_user_nickname').val();
+        $.ajax({
+            type: 'POST',
+            url: "/edit_user_info",
+            dataType: "json",
+            data: {
+                username: USER_NAME,
+                nickname: $edit_user_nickname,
+            },
+            success: function (data){
+                if(data.status == 'Y') {
+                    show_pnotify('編輯會員詳細資料', data.message, 'success');
+                    $Table.ajax.reload();
+                    $('.user-info-modal-sm').modal('hide');
+                }else{
+                    show_pnotify('編輯會員詳細資料', data.message, 'error');
+                    $Table.ajax.reload();
+                }
+            },
+            error: function (err) {
+                show_pnotify("編輯會員詳細資料", "建立連線失敗", "error");
+            }
+        });
+    });
     // 當動態視窗隱藏後，觸發該事件
-    // $('.edit-pass-modal-sm,.user-info-modal-sm,.add-user-modal-sm').on('hidden.bs.modal', function(e) {
-    //     $(this).find('input').val('');
-    //     $('#new_orgname').empty();
-    //     $('#new_orgunit').empty();
-    //     $("#new_orgname").chosen("destroy");
-    //     $("#new_orgunit").chosen("destroy");
-    //     $('#edit_user_org_name').empty();
-    //     $('#edit_user_org_unit').empty();
-    // });
+    $('.edit-pass-modal-sm,.user-info-modal-sm,.add-user-modal-sm').on('hidden.bs.modal', function(e) {
+        $(this).find('input').val('');
+    });
     // 新增用戶 Submit
     $($ADD_USER_SUBMIT).on('click', function() {
         var $username = $('#add_user_form input[name=username]').val(),
@@ -235,15 +188,6 @@ $(document).ready(function() {
             }
         })
     });
-    // 註冊會員時，顯示群的值
-    // $('#btn-add-user').on('click', function() {
-    //     $('#new_orgname').append("<option value='', disabled='', selected=''>-- 請選擇單位 --</option>");
-    //     for (const [key, val] of Object.entries(GROUP_DATA)) {
-    //         $('#new_orgname').append("<option value='" + key +"'>" + val + "</option>");
-    //     }
-    //     $('#new_orgname').chosen({width: "100%"});
-    //     $('.hide_orgunit').hide();
-    // });
     //　刪除用戶Token
     // $($DEL_USERTOKEN_SUBMIT).on('click', function() {
     //     // console.log(USER_NAME);
@@ -307,21 +251,6 @@ $(document).ready(function() {
         });
     }
 
-    // 取得單位清單
-    // $.ajax({
-    //     type: "GET",
-    //     //使用JSONP務必在結尾使用 GET 的 callback=?
-    //     url: '/group_list',
-    //     dataType: "json",
-    //     success: function (data){
-    //         if(data.status == 'Y'){
-    //             GROUP_DATA = data.data;
-    //         }
-    //     },
-    //     error: function () {
-    //         show_pnotify("取得單位與部門資料", "建立連線失敗", "error");
-    //     }
-    // })
     // $.ajax({
     //     type: "GET",
     //     //使用JSONP務必在結尾使用 GET 的 callback=?

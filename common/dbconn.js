@@ -38,6 +38,4 @@ con.connect(function(err, client, done) {
     }
 })
 
-console.log(env)
-console.log(con)
 module.exports = con;
